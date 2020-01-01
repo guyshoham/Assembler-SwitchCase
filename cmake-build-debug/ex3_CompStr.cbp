@@ -78,7 +78,7 @@
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="/home/guy/CLionProjects/ex3-CompStr/main.c">
+		<Unit filename="/home/guy/CLionProjects/ex3-CompStr/compile.c">
 			<Option target="ex3_CompStr"/>
 		</Unit>
 		<Unit filename="/home/guy/CLionProjects/ex3-CompStr/CMakeLists.txt">

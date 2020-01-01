@@ -6,7 +6,15 @@
 
 #IncludeRegexTransform: 
 
-/home/guy/CLionProjects/ex3-CompStr/main.c
+/home/guy/CLionProjects/ex3-CompStr/compile.c
 stdio.h
+-
+stdlib.h
+-
+string.h
+-
+limits.h
+-
+stdbool.h
 -
 

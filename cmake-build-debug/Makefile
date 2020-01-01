@@ -123,32 +123,32 @@ ex3_CompStr/fast:
 	$(MAKE) -f CMakeFiles/ex3_CompStr.dir/build.make CMakeFiles/ex3_CompStr.dir/build
 .PHONY : ex3_CompStr/fast
 
-main.o: main.c.o
+compile.o: compile.c.o
 
-.PHONY : main.o
+.PHONY : compile.o
 
 # target to build an object file
-main.c.o:
-	$(MAKE) -f CMakeFiles/ex3_CompStr.dir/build.make CMakeFiles/ex3_CompStr.dir/main.c.o
-.PHONY : main.c.o
+compile.c.o:
+	$(MAKE) -f CMakeFiles/ex3_CompStr.dir/build.make CMakeFiles/ex3_CompStr.dir/compile.c.o
+.PHONY : compile.c.o
 
-main.i: main.c.i
+compile.i: compile.c.i
 
-.PHONY : main.i
+.PHONY : compile.i
 
 # target to preprocess a source file
-main.c.i:
-	$(MAKE) -f CMakeFiles/ex3_CompStr.dir/build.make CMakeFiles/ex3_CompStr.dir/main.c.i
-.PHONY : main.c.i
+compile.c.i:
+	$(MAKE) -f CMakeFiles/ex3_CompStr.dir/build.make CMakeFiles/ex3_CompStr.dir/compile.c.i
+.PHONY : compile.c.i
 
-main.s: main.c.s
+compile.s: compile.c.s
 
-.PHONY : main.s
+.PHONY : compile.s
 
 # target to generate assembly for a file
-main.c.s:
-	$(MAKE) -f CMakeFiles/ex3_CompStr.dir/build.make CMakeFiles/ex3_CompStr.dir/main.c.s
-.PHONY : main.c.s
+compile.c.s:
+	$(MAKE) -f CMakeFiles/ex3_CompStr.dir/build.make CMakeFiles/ex3_CompStr.dir/compile.c.s
+.PHONY : compile.c.s
 
 # Help Target
 help:
@@ -159,9 +159,9 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... ex3_CompStr"
 	@echo "... edit_cache"
-	@echo "... main.o"
-	@echo "... main.i"
-	@echo "... main.s"
+	@echo "... compile.o"
+	@echo "... compile.i"
+	@echo "... compile.s"
 .PHONY : help
 
 

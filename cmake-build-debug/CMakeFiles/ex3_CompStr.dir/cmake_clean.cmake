@@ -1,5 +1,5 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/ex3_CompStr.dir/main.c.o"
+  "CMakeFiles/ex3_CompStr.dir/compile.c.o"
   "ex3_CompStr"
   "ex3_CompStr.pdb"
 )
