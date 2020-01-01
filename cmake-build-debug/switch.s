@@ -1,6 +1,10 @@
 .section .text
 .globl switch2
 switch2: movq $0,%rbx
+subq $11,%rcx
+cmpq %rdx,%rcx
+ja .LD
+jmp *.T1(,%rcx,8)
 .L27:
 movq %rsi,%rdi
 movq %rbx,%rsi

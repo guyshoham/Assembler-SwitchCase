@@ -38,7 +38,15 @@ int main() {
   int min = INT_MAX, max = INT_MIN;
   while (fgets(line, 1024, readPtr) != NULL) {
     token = strtok(line, " ");
-    if (!strcmp(token, "case")) {
+    if (!strcmp(token, "long")) {
+      token = strtok(NULL, " ");
+      if (!strcmp(token, "result")) {
+        token = strtok(NULL, " ");
+        token = strtok(NULL, ";");
+        int value = atoi(token);
+        fprintf(writePtr, "%s $%d,%s\n", "movq", value, REG_RESULT);
+      }
+    } else if (!strcmp(token, "case")) {
       token = strtok(NULL, ":");
       int caseNum = atoi(token);
       if (caseNum < min) {
@@ -63,17 +71,14 @@ int main() {
     exit(1);
   }
 
+  fprintf(writePtr, "%s $%d,%s\n", "subq", arrSize, "%rcx");
+  fprintf(writePtr, "%s %s,%s\n", "cmpq", REG_ACTION, "%rcx");
+  fprintf(writePtr, "%s %s\n", "ja", jTable[0]);
+  fprintf(writePtr, "%s\n", "jmp *.T1(,%rcx,8)");
+
   while (fgets(line, 1024, readPtr) != NULL) {
     token = strtok(line, " ");
-    if (!strcmp(token, "long")) {
-      token = strtok(NULL, " ");
-      if (!strcmp(token, "result")) {
-        token = strtok(NULL, " ");
-        token = strtok(NULL, ";");
-        int value = atoi(token);
-        fprintf(writePtr, "%s $%d,%s\n", "movq", value, REG_RESULT);
-      }
-    } else if (!strcmp(token, "case")) {
+    if (!strcmp(token, "case")) {
       token = strtok(NULL, ":");
       int caseNum = atoi(token);
       char* tag = concat(".L", token);

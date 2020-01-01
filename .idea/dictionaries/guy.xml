@@ -2,6 +2,7 @@
   <dictionary name="guy">
     <words>
       <w>addq</w>
+      <w>cmpq</w>
       <w>leaq</w>
       <w>movq</w>
       <w>mulq</w>
