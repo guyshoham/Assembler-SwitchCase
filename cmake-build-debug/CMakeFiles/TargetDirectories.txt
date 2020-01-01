@@ -1,0 +1,3 @@
+/home/guy/CLionProjects/ex3-CompStr/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/guy/CLionProjects/ex3-CompStr/cmake-build-debug/CMakeFiles/ex3_CompStr.dir
+/home/guy/CLionProjects/ex3-CompStr/cmake-build-debug/CMakeFiles/edit_cache.dir
