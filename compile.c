@@ -4,10 +4,12 @@
 #include <limits.h>
 #include <stdbool.h>
 
-#define REG_P1 "%rdi"
-#define REG_P2 "%rsi"
+#define REG_P1 "(%rdi)"
+#define REG_P2 "(%rsi)"
 #define REG_ACTION "%rdx"
 #define REG_RESULT "%rbx"
+#define REG_RCX "%rcx"
+#define REG_CL "%cl"
 
 char* concat(const char* s1, const char* s2);
 void parse(FILE* writePtr, const char* dst, const char* op, const char* src);
@@ -33,8 +35,9 @@ int main() {
   //print file set up
   fprintf(writePtr, "%s", ".section .text\n");
   fprintf(writePtr, "%s", ".globl switch2\n");
-  fprintf(writePtr, "%s", "switch2: ");
+  fprintf(writePtr, "%s", "switch2:\n");
 
+  //setting min and max
   int min = INT_MAX, max = INT_MIN;
   while (fgets(line, 1024, readPtr) != NULL) {
     token = strtok(line, " ");
@@ -71,8 +74,8 @@ int main() {
     exit(1);
   }
 
-  fprintf(writePtr, "%s $%d,%s\n", "subq", arrSize, "%rcx");
-  fprintf(writePtr, "%s %s,%s\n", "cmpq", REG_ACTION, "%rcx");
+  fprintf(writePtr, "%s $%d,%s\n", "subq", min, "%rdx");
+  fprintf(writePtr, "%s $%d,%s\n", "cmpq", arrSize - 1, REG_ACTION);
   fprintf(writePtr, "%s %s\n", "ja", jTable[0]);
   fprintf(writePtr, "%s\n", "jmp *.T1(,%rcx,8)");
 
@@ -147,41 +150,61 @@ void parse(FILE* writePtr, const char* dst, const char* op, const char* src) {
 
   switch (op[0]) {
     case '=': //=
-      fprintf(writePtr, "%s %s,%s\n", "movq", regDst, regSrc);
+      if (isCount) {
+        fprintf(writePtr, "%s $%d,%s\n", "movq", count, regDst);
+      }
+      else if (regDst[0] == '(' && regSrc[0] == '(') {
+        fprintf(writePtr, "%s %s,%s\n", "movq", regSrc, REG_RCX);
+        fprintf(writePtr, "%s %s,%s\n", "movq", REG_RCX, regDst);
+      } else {
+        fprintf(writePtr, "%s %s,%s\n", "movq", regSrc, regDst);
+      }
       break;
     case '+': //+=
       if (isCount) {
-        fprintf(writePtr, "%s %s,$%d\n", "addq", regDst, count);
+        fprintf(writePtr, "%s $%d,%s\n", "addq", count, regDst);
+      } else if (regDst[0] == '(' && regSrc[0] == '(') {
+        fprintf(writePtr, "%s %s,%s\n", "movq", regSrc, REG_RCX);
+        fprintf(writePtr, "%s %s,%s\n", "addq", REG_RCX, regDst);
       } else {
-        fprintf(writePtr, "%s %s,%s\n", "addq", regDst, regSrc);
+        fprintf(writePtr, "%s %s,%s\n", "addq", regSrc, regDst);
       }
       break;
     case '-': //-=
       if (isCount) {
-        fprintf(writePtr, "%s %s,$%d\n", "subq", regDst, count);
+        fprintf(writePtr, "%s $%d,%s\n", "subq", count, regDst);
+      } else if (regDst[0] == '(' && regSrc[0] == '(') {
+        fprintf(writePtr, "%s %s,%s\n", "movq", regSrc, REG_RCX);
+        fprintf(writePtr, "%s %s,%s\n", "subq", REG_RCX, regDst);
       } else {
-        fprintf(writePtr, "%s %s,%s\n", "subq", regDst, regSrc);
+        fprintf(writePtr, "%s %s,%s\n", "subq", regSrc, regDst);
       }
       break;
     case '*': //*=
       if (isCount) {
-        fprintf(writePtr, "%s %s,$%d\n", "mulq", regDst, count);
+        fprintf(writePtr, "%s $%d,%s\n", "mulq", count, regDst);
+      } else if (regDst[0] == '(' && regSrc[0] == '(') {
+        fprintf(writePtr, "%s %s,%s\n", "movq", regSrc, REG_RCX);
+        fprintf(writePtr, "%s %s,%s\n", "mulq", REG_RCX, regDst);
       } else {
         fprintf(writePtr, "%s %s,%s\n", "mulq", regDst, regSrc);
       }
       break;
     case '<': //<<=
       if (isCount) {
-        fprintf(writePtr, "%s $%d,%s\n", "shlq", count, regDst);
+        fprintf(writePtr, "%s $%d,%s\n", "shl", count, regDst);
       } else {
-        fprintf(writePtr, "%s (%s),%s\n", "shlq", regSrc, regDst);
+        fprintf(writePtr, "%s %s,%s\n", "movq", regSrc, REG_RCX);
+        fprintf(writePtr, "%s %s,%s\n", "shl", REG_CL, regDst);
+
       }
       break;
     case '>': //>>=
       if (isCount) {
-        fprintf(writePtr, "%s $%d,%s\n", "sarq", count, regDst);
+        fprintf(writePtr, "%s $%d,%s\n", "shr", count, regDst);
       } else {
-        fprintf(writePtr, "%s (%s),%s\n", "sarq", regSrc, regDst);
+        fprintf(writePtr, "%s %s,%s\n", "movq", regSrc, REG_RCX);
+        fprintf(writePtr, "%s %s,%s\n", "shr", REG_CL, regDst);
       }
       break;
   }

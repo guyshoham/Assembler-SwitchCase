@@ -1,36 +1,41 @@
 .section .text
 .globl switch2
-switch2: movq $0,%rbx
-subq $11,%rcx
-cmpq %rdx,%rcx
+switch2:
+movq $0,%rbx
+subq $21,%rdx
+cmpq $10,%rdx
 ja .LD
 jmp *.T1(,%rcx,8)
 .L27:
-movq %rsi,%rdi
-movq %rbx,%rsi
+movq (%rdi),%rcx
+movq %rcx,(%rsi)
+movq (%rsi),%rbx
 jmp .DONE:
 .L25:
-addq %rdi,%rsi
-movq %rbx,%rdi
+movq (%rsi),%rcx
+addq %rcx,(%rdi)
+movq (%rdi),%rbx
 jmp .DONE:
 .L29:
 .L30:
-subq %rdi,$59
-subq %rsi,%rdi
+subq $59,(%rdi)
+movq (%rdi),%rcx
+subq %rcx,(%rsi)
 jmp .DONE:
 .L23:
-addq %rdi,$60
+addq $60,(%rdi)
 .L21:
-movq %rbx,%rsi
+movq (%rsi),%rbx
 mulq %rbx,%rbx
 jmp .DONE:
 .L31:
-movq %rbx,%rsi
-sarq (%rdi),%rbx
+movq (%rsi),%rbx
+movq (%rdi),%rcx
+shr %cl,%rbx
 jmp .DONE:
 .LD:
-movq %rbx,X
-shlq $3,%rbx
+movq $12,%rbx
+shl $3,%rbx
 ret
 .DONE:
 movq %rbx,%rax
