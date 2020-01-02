@@ -118,7 +118,6 @@ char* concat(const char* s1, const char* s2) {
 }
 
 void parse(FILE* writePtr, const char* dst, const char* op, const char* src) {
-
   char* regDst = "X", * regSrc = "X";
   int count = 0;
   bool isCount = false;
@@ -189,7 +188,6 @@ void parse(FILE* writePtr, const char* dst, const char* op, const char* src) {
       } else {
         fprintf(writePtr, "%s %s, %s\n", "movq", regSrc, REG_RCX);
         fprintf(writePtr, "%s %s, %s\n", "shl", REG_CL, regDst);
-
       }
       break;
     case '>': //>>=
