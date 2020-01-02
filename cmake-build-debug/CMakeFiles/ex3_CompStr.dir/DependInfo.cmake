@@ -4,7 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_C
-  "/home/guy/CLionProjects/ex3-CompStr/compile.c" "/home/guy/CLionProjects/ex3-CompStr/cmake-build-debug/CMakeFiles/ex3_CompStr.dir/compile.c.o"
+  "/home/guy/CLionProjects/ex3-CompStr/cmake-build-debug/compile.c" "/home/guy/CLionProjects/ex3-CompStr/cmake-build-debug/CMakeFiles/ex3_CompStr.dir/compile.c.o"
   )
 set(CMAKE_C_COMPILER_ID "GNU")
 

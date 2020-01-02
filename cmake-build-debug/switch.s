@@ -10,29 +10,29 @@ jmp *.T1(,%rcx,8)
 movq (%rdi),%rcx
 movq %rcx,(%rsi)
 movq (%rsi),%rbx
-jmp .DONE:
+jmp .DONE
 .L25:
 movq (%rsi),%rcx
 addq %rcx,(%rdi)
 movq (%rdi),%rbx
-jmp .DONE:
+jmp .DONE
 .L29:
 .L30:
 subq $59,(%rdi)
 movq (%rdi),%rcx
 subq %rcx,(%rsi)
-jmp .DONE:
+jmp .DONE
 .L23:
 addq $60,(%rdi)
 .L21:
 movq (%rsi),%rbx
-mulq %rbx,%rbx
-jmp .DONE:
+imulq %rbx,%rbx
+jmp .DONE
 .L31:
 movq (%rsi),%rbx
 movq (%rdi),%rcx
 shr %cl,%rbx
-jmp .DONE:
+jmp .DONE
 .LD:
 movq $12,%rbx
 shl $3,%rbx

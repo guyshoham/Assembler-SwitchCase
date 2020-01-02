@@ -58,17 +58,17 @@ include CMakeFiles/ex3_CompStr.dir/progress.make
 include CMakeFiles/ex3_CompStr.dir/flags.make
 
 CMakeFiles/ex3_CompStr.dir/compile.c.o: CMakeFiles/ex3_CompStr.dir/flags.make
-CMakeFiles/ex3_CompStr.dir/compile.c.o: ../compile.c
+CMakeFiles/ex3_CompStr.dir/compile.c.o: compile.c
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/guy/CLionProjects/ex3-CompStr/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/ex3_CompStr.dir/compile.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/ex3_CompStr.dir/compile.c.o   -c /home/guy/CLionProjects/ex3-CompStr/compile.c
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/ex3_CompStr.dir/compile.c.o   -c /home/guy/CLionProjects/ex3-CompStr/cmake-build-debug/compile.c
 
 CMakeFiles/ex3_CompStr.dir/compile.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/ex3_CompStr.dir/compile.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/guy/CLionProjects/ex3-CompStr/compile.c > CMakeFiles/ex3_CompStr.dir/compile.c.i
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/guy/CLionProjects/ex3-CompStr/cmake-build-debug/compile.c > CMakeFiles/ex3_CompStr.dir/compile.c.i
 
 CMakeFiles/ex3_CompStr.dir/compile.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/ex3_CompStr.dir/compile.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/guy/CLionProjects/ex3-CompStr/compile.c -o CMakeFiles/ex3_CompStr.dir/compile.c.s
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/guy/CLionProjects/ex3-CompStr/cmake-build-debug/compile.c -o CMakeFiles/ex3_CompStr.dir/compile.c.s
 
 # Object files for target ex3_CompStr
 ex3_CompStr_OBJECTS = \

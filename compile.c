@@ -15,11 +15,6 @@ char* concat(const char* s1, const char* s2);
 void parse(FILE* writePtr, const char* dst, const char* op, const char* src);
 
 int main() {
-
-  //*p1 - %rdi
-  //*p2 - %rsi
-  //action - %rdx
-
   FILE* readPtr, * writePtr;
   char* token;
   char line[1024];
@@ -88,7 +83,7 @@ int main() {
       jTable[caseNum - min] = tag;
       fprintf(writePtr, "%s:\n", jTable[caseNum - min]);
     } else if (!strcmp(token, "break;\r\n")) {
-      fprintf(writePtr, "%s\n", "jmp .DONE:");
+      fprintf(writePtr, "%s\n", "jmp .DONE");
     } else if (!strcmp(token, "return")) {
       fprintf(writePtr, "%s\n", "ret");
     } else if (!strcmp(token, "default:\r\n")) {
@@ -182,12 +177,12 @@ void parse(FILE* writePtr, const char* dst, const char* op, const char* src) {
       break;
     case '*': //*=
       if (isCount) {
-        fprintf(writePtr, "%s $%d,%s\n", "mulq", count, regDst);
+        fprintf(writePtr, "%s $%d,%s\n", "imulq", count, regDst);
       } else if (regDst[0] == '(' && regSrc[0] == '(') {
         fprintf(writePtr, "%s %s,%s\n", "movq", regSrc, REG_RCX);
-        fprintf(writePtr, "%s %s,%s\n", "mulq", REG_RCX, regDst);
+        fprintf(writePtr, "%s %s,%s\n", "imulq", REG_RCX, regDst);
       } else {
-        fprintf(writePtr, "%s %s,%s\n", "mulq", regDst, regSrc);
+        fprintf(writePtr, "%s %s,%s\n", "imulq", regDst, regSrc);
       }
       break;
     case '<': //<<=

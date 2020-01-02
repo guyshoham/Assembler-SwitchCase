@@ -6,7 +6,7 @@
 
 #IncludeRegexTransform: 
 
-/home/guy/CLionProjects/ex3-CompStr/compile.c
+/home/guy/CLionProjects/ex3-CompStr/cmake-build-debug/compile.c
 stdio.h
 -
 stdlib.h
