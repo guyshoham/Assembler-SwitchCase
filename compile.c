@@ -148,8 +148,7 @@ void parse(FILE* writePtr, const char* dst, const char* op, const char* src) {
     case '=': //=
       if (isCount) {
         fprintf(writePtr, "%s $%d,%s\n", "movq", count, regDst);
-      }
-      else if (regDst[0] == '(' && regSrc[0] == '(') {
+      } else if (regDst[0] == '(' && regSrc[0] == '(') {
         fprintf(writePtr, "%s %s,%s\n", "movq", regSrc, REG_RCX);
         fprintf(writePtr, "%s %s,%s\n", "movq", REG_RCX, regDst);
       } else {
