@@ -4,7 +4,7 @@ switch2:
 movq $0,%rbx
 subq $21,%rdx
 cmpq $10,%rdx
-ja .LD
+ja .Ld
 jmp *.T1(,%rcx,8)
 .L27:
 movq (%rdi),%rcx
@@ -33,7 +33,7 @@ movq (%rsi),%rbx
 movq (%rdi),%rcx
 shr %cl,%rbx
 jmp .DONE
-.LD:
+.Ld:
 movq $12,%rbx
 shl $3,%rbx
 ret
@@ -44,13 +44,13 @@ ret
 .align 8
 .T1:
 .quad .L21
-.quad .LD
+.quad .Ld
 .quad .L23
-.quad .LD
+.quad .Ld
 .quad .L25
-.quad .LD
+.quad .Ld
 .quad .L27
-.quad .LD
+.quad .Ld
 .quad .L29
 .quad .L30
 .quad .L31

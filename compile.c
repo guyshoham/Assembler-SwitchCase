@@ -105,8 +105,7 @@ int main() {
   fprintf(writePtr, "%s\n", ".T1:");
 
   int j;
-  for (j = 0; i < arrSize; i++) {
-
+  for (j = 0; j < arrSize; j++) {
     fprintf(writePtr, "%s %s\n", ".quad", jTable[j]);
   }
 
