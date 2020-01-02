@@ -42,7 +42,7 @@ int main() {
         token = strtok(NULL, " ");
         token = strtok(NULL, ";");
         int value = atoi(token);
-        fprintf(writePtr, "%s $%d,%s\n", "movq", value, REG_RESULT);
+        fprintf(writePtr, "%s $%d, %s\n", "movq", value, REG_RESULT);
       }
     } else if (!strcmp(token, "case")) {
       token = strtok(NULL, ":");
@@ -70,10 +70,10 @@ int main() {
     exit(1);
   }
 
-  fprintf(writePtr, "%s $%d,%s\n", "subq", min, "%rdx");
-  fprintf(writePtr, "%s $%d,%s\n", "cmpq", arrSize - 1, REG_ACTION);
+  fprintf(writePtr, "%s $%d, %s\n", "subq", min, "%rdx");
+  fprintf(writePtr, "%s $%d, %s\n", "cmpq", arrSize - 1, REG_ACTION);
   fprintf(writePtr, "%s %s\n", "ja", jTable[0]);
-  fprintf(writePtr, "%s\n", "jmp *.T1(,%rcx,8)");
+  fprintf(writePtr, "%s\n", "jmp *.T1(,%rdx,8)");
 
   while (fgets(line, 1024, readPtr) != NULL) {
     token = strtok(line, " ");
@@ -85,8 +85,6 @@ int main() {
       fprintf(writePtr, "%s:\n", jTable[caseNum - min]);
     } else if (!strcmp(token, "break;\r\n")) {
       fprintf(writePtr, "%s\n", "jmp .DONE");
-    } else if (!strcmp(token, "return")) {
-      fprintf(writePtr, "%s\n", "ret");
     } else if (!strcmp(token, "default:\r\n")) {
       fprintf(writePtr, "%s\n", ".LD:");
     } else if (!strcmp(token, "*p1") || !strcmp(token, "*p2") || !strcmp(token, "result")) {
@@ -98,7 +96,7 @@ int main() {
   }
 
   fprintf(writePtr, "%s\n", ".DONE:");
-  fprintf(writePtr, "%s %s,%s\n", "movq", REG_RESULT, "%rax");
+  fprintf(writePtr, "%s %s, %s\n", "movq", REG_RESULT, "%rax");
   fprintf(writePtr, "%s\n", "ret");
   fprintf(writePtr, "%s\n", ".section .rodata");
   fprintf(writePtr, "%s\n", ".align 8");
@@ -147,59 +145,59 @@ void parse(FILE* writePtr, const char* dst, const char* op, const char* src) {
   switch (op[0]) {
     case '=': //=
       if (isCount) {
-        fprintf(writePtr, "%s $%d,%s\n", "movq", count, regDst);
+        fprintf(writePtr, "%s $%d, %s\n", "movq", count, regDst);
       } else if (regDst[0] == '(' && regSrc[0] == '(') {
-        fprintf(writePtr, "%s %s,%s\n", "movq", regSrc, REG_RCX);
-        fprintf(writePtr, "%s %s,%s\n", "movq", REG_RCX, regDst);
+        fprintf(writePtr, "%s %s, %s\n", "movq", regSrc, REG_RCX);
+        fprintf(writePtr, "%s %s, %s\n", "movq", REG_RCX, regDst);
       } else {
-        fprintf(writePtr, "%s %s,%s\n", "movq", regSrc, regDst);
+        fprintf(writePtr, "%s %s, %s\n", "movq", regSrc, regDst);
       }
       break;
     case '+': //+=
       if (isCount) {
-        fprintf(writePtr, "%s $%d,%s\n", "addq", count, regDst);
+        fprintf(writePtr, "%s $%d, %s\n", "addq", count, regDst);
       } else if (regDst[0] == '(' && regSrc[0] == '(') {
-        fprintf(writePtr, "%s %s,%s\n", "movq", regSrc, REG_RCX);
-        fprintf(writePtr, "%s %s,%s\n", "addq", REG_RCX, regDst);
+        fprintf(writePtr, "%s %s, %s\n", "movq", regSrc, REG_RCX);
+        fprintf(writePtr, "%s %s, %s\n", "addq", REG_RCX, regDst);
       } else {
-        fprintf(writePtr, "%s %s,%s\n", "addq", regSrc, regDst);
+        fprintf(writePtr, "%s %s, %s\n", "addq", regSrc, regDst);
       }
       break;
     case '-': //-=
       if (isCount) {
-        fprintf(writePtr, "%s $%d,%s\n", "subq", count, regDst);
+        fprintf(writePtr, "%s $%d, %s\n", "subq", count, regDst);
       } else if (regDst[0] == '(' && regSrc[0] == '(') {
-        fprintf(writePtr, "%s %s,%s\n", "movq", regSrc, REG_RCX);
-        fprintf(writePtr, "%s %s,%s\n", "subq", REG_RCX, regDst);
+        fprintf(writePtr, "%s %s, %s\n", "movq", regSrc, REG_RCX);
+        fprintf(writePtr, "%s %s, %s\n", "subq", REG_RCX, regDst);
       } else {
-        fprintf(writePtr, "%s %s,%s\n", "subq", regSrc, regDst);
+        fprintf(writePtr, "%s %s, %s\n", "subq", regSrc, regDst);
       }
       break;
     case '*': //*=
       if (isCount) {
-        fprintf(writePtr, "%s $%d,%s\n", "imulq", count, regDst);
+        fprintf(writePtr, "%s $%d, %s\n", "imulq", count, regDst);
       } else if (regDst[0] == '(' && regSrc[0] == '(') {
-        fprintf(writePtr, "%s %s,%s\n", "movq", regSrc, REG_RCX);
-        fprintf(writePtr, "%s %s,%s\n", "imulq", REG_RCX, regDst);
+        fprintf(writePtr, "%s %s, %s\n", "movq", regSrc, REG_RCX);
+        fprintf(writePtr, "%s %s, %s\n", "imulq", REG_RCX, regDst);
       } else {
-        fprintf(writePtr, "%s %s,%s\n", "imulq", regDst, regSrc);
+        fprintf(writePtr, "%s %s, %s\n", "imulq", regDst, regSrc);
       }
       break;
     case '<': //<<=
       if (isCount) {
-        fprintf(writePtr, "%s $%d,%s\n", "shl", count, regDst);
+        fprintf(writePtr, "%s $%d, %s\n", "shl", count, regDst);
       } else {
-        fprintf(writePtr, "%s %s,%s\n", "movq", regSrc, REG_RCX);
-        fprintf(writePtr, "%s %s,%s\n", "shl", REG_CL, regDst);
+        fprintf(writePtr, "%s %s, %s\n", "movq", regSrc, REG_RCX);
+        fprintf(writePtr, "%s %s, %s\n", "shl", REG_CL, regDst);
 
       }
       break;
     case '>': //>>=
       if (isCount) {
-        fprintf(writePtr, "%s $%d,%s\n", "shr", count, regDst);
+        fprintf(writePtr, "%s $%d, %s\n", "shr", count, regDst);
       } else {
-        fprintf(writePtr, "%s %s,%s\n", "movq", regSrc, REG_RCX);
-        fprintf(writePtr, "%s %s,%s\n", "shr", REG_CL, regDst);
+        fprintf(writePtr, "%s %s, %s\n", "movq", regSrc, REG_RCX);
+        fprintf(writePtr, "%s %s, %s\n", "shr", REG_CL, regDst);
       }
       break;
   }
