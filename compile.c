@@ -59,7 +59,8 @@ int main() {
   fclose(readPtr);
   int arrSize = max - min + 1;
   char* jTable[arrSize];
-  for (int i = 0; i < arrSize; i++) {
+  int i;
+  for (i = 0; i < arrSize; i++) {
     jTable[i] = ".LD";
   }
 
@@ -103,9 +104,10 @@ int main() {
   fprintf(writePtr, "%s\n", ".align 8");
   fprintf(writePtr, "%s\n", ".T1:");
 
-  for (int i = 0; i < arrSize; i++) {
+  int j;
+  for (j = 0; i < arrSize; i++) {
 
-    fprintf(writePtr, "%s %s\n", ".quad", jTable[i]);
+    fprintf(writePtr, "%s %s\n", ".quad", jTable[j]);
   }
 
   return 0;
