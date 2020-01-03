@@ -83,9 +83,9 @@ int main() {
       char* tag = concat(".L", token);
       jTable[caseNum - min] = tag;
       fprintf(writePtr, "%s:\n", jTable[caseNum - min]);
-    } else if (!strcmp(token, "break;\r\n")) {
+    } else if (!strcmp(token, "break;\n")) {
       fprintf(writePtr, "%s\n", "jmp .DONE");
-    } else if (!strcmp(token, "default:\r\n")) {
+    } else if (!strcmp(token, "default:\n")) {
       fprintf(writePtr, "%s\n", ".LD:");
     } else if (!strcmp(token, "*p1") || !strcmp(token, "*p2") || !strcmp(token, "result")) {
       char* dst = token;
